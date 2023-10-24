@@ -82,7 +82,6 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-  // const result = value.slice(0, 1);
   const firstChar = value[0];
   return firstChar;
 }
@@ -260,8 +259,30 @@ function getRectangleString(width, height) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let stringEncode = '';
+
+  for (let i = 0; i < str.length; i += 1) {
+    const letterCharCode = str.charCodeAt(i);
+    const isUppercaseLetter = letterCharCode > 64 && letterCharCode < 91;
+    const isLowercaseLetter = letterCharCode > 96 && letterCharCode < 123;
+
+    if (!(isUppercaseLetter || isLowercaseLetter)) {
+      stringEncode += str[i];
+    } else if (isUppercaseLetter) {
+      if (letterCharCode + 13 < 91) {
+        stringEncode += String.fromCharCode(letterCharCode + 13);
+      } else {
+        stringEncode += String.fromCharCode(65 + (letterCharCode + 13 - 91));
+      }
+    } else if (letterCharCode + 13 < 123) {
+      stringEncode += String.fromCharCode(letterCharCode + 13);
+    } else {
+      stringEncode += String.fromCharCode(97 + (letterCharCode + 13 - 123));
+    }
+  }
+
+  return stringEncode;
 }
 
 /**
@@ -277,8 +298,11 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  const isTypeString = typeof value === 'string';
+  const isInstanceString = value instanceof String;
+  const isValueString = isTypeString || isInstanceString;
+  return isValueString;
 }
 
 /**
@@ -305,8 +329,38 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  let number = value.slice(0, -1);
+
+  if (number === 'A') {
+    number = 1;
+  } else if (number === 'J') {
+    number = 11;
+  } else if (number === 'Q') {
+    number = 12;
+  } else if (number === 'K') {
+    number = 13;
+  } else {
+    number = Number(number);
+  }
+
+  let suit = value.slice(-1);
+
+  if (suit === '♣') {
+    suit = 0;
+  }
+  if (suit === '♦') {
+    suit = 1;
+  }
+  if (suit === '♥') {
+    suit = 2;
+  }
+  if (suit === '♠') {
+    suit = 3;
+  }
+
+  const cardId = number + suit * 13 - 1;
+  return cardId;
 }
 
 module.exports = {
