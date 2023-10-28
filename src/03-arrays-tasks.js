@@ -302,8 +302,10 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 1,2,3,4,5,6,7,8,9,10 ] => [ 10, 9, 8 ]
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
-function get3TopItems(/* arr */) {
-  throw new Error('Not implemented');
+function get3TopItems(arr) {
+  const sortArray = arr.sort((a, b) => b - a);
+  const top3Array = sortArray.slice(0, 3);
+  return top3Array;
 }
 
 /**
@@ -319,8 +321,13 @@ function get3TopItems(/* arr */) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getPositivesCount(arr) {
+  const positiveNumberArray = arr.filter((item) => {
+    const condition = typeof item === 'number' && item > 0;
+    return condition;
+  });
+
+  return positiveNumberArray.length;
 }
 
 /**
@@ -336,8 +343,25 @@ function getPositivesCount(/* arr */) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const digitArray = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+
+  const digitNameArray = arr.sort(
+    (a, b) => digitArray.indexOf(a) - digitArray.indexOf(b),
+  );
+
+  return digitNameArray;
 }
 
 /**
@@ -352,8 +376,13 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   [ -1, 1, -1, 1 ]      => 0
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
-function getItemsSum(/* arr */) {
-  throw new Error('Not implemented');
+function getItemsSum(arr) {
+  let sum = 0;
+  arr.map((item) => {
+    sum += item;
+    return item;
+  });
+  return sum;
 }
 
 /**
@@ -368,8 +397,10 @@ function getItemsSum(/* arr */) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  const falsyArray = arr.filter((item) => !item);
+  const falsyCount = falsyArray.length;
+  return falsyCount;
 }
 
 /**
