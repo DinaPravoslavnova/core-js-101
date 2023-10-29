@@ -177,8 +177,22 @@ function isInsideCircle(circle, point) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const uniqueChars = {};
+
+  for (let i = 0; i < str.length; i += 1) {
+    const currentChar = str[i];
+    uniqueChars[currentChar] = uniqueChars[currentChar]
+      ? uniqueChars[currentChar] + 1
+      : 1;
+  }
+
+  const uniqueCharsArray = Object.keys(uniqueChars);
+  const firstUniqueChar = uniqueCharsArray.find(
+    (char) => uniqueChars[char] === 1,
+  );
+
+  return firstUniqueChar || null;
 }
 
 /**
@@ -203,8 +217,15 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const lowerLimit = isStartIncluded ? '[' : '(';
+  const upperLimit = isEndIncluded ? ']' : ')';
+
+  const interval = a < b ? `${a}, ${b}` : `${b}, ${a}`;
+
+  const result = `${lowerLimit}${interval}${upperLimit}`;
+
+  return result;
 }
 
 /**
@@ -219,8 +240,11 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  const stringArray = str.split('');
+  const reverseStringArray = stringArray.reverse();
+  const resultString = reverseStringArray.join('');
+  return resultString;
 }
 
 /**
@@ -263,8 +287,33 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const digitArray = ccn.toString().split('');
+
+  let validate = 0;
+
+  if (digitArray.length % 2 === 0) {
+    for (let i = 0; i < digitArray.length; i += 1) {
+      if (i % 2 === 0) {
+        validate
+          += digitArray[i] * 2 > 9 ? digitArray[i] * 2 - 9 : digitArray[i] * 2;
+      } else {
+        validate += Number(digitArray[i]);
+      }
+    }
+  } else {
+    for (let i = 0; i < digitArray.length; i += 1) {
+      if (i % 2 !== 0) {
+        validate
+          += digitArray[i] * 2 > 9 ? digitArray[i] * 2 - 9 : digitArray[i] * 2;
+      } else {
+        validate += Number(digitArray[i]);
+      }
+    }
+  }
+
+  const isValid = validate % 10 === 0;
+  return isValid;
 }
 
 /**
